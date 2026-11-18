@@ -1,0 +1,24 @@
+PREFIX ex: <http://example.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+# The same expectations as the ontology's functional and inverse
+# functional properties, written as shapes: here they report, not infer.
+
+ex:OneBirthplaceShape a sh:NodeShape ;
+  sh:targetSubjectsOf ex:birthplace ;
+  sh:property [
+    sh:path ex:birthplace ;
+    sh:maxCount 1 ;
+    sh:message "More than one birthplace" ;
+  ] ;
+  .
+
+ex:OneDogPerChipShape a sh:NodeShape ;
+  sh:targetObjectsOf ex:microchip ;
+  sh:property [
+    sh:path [ sh:inversePath ex:microchip ] ;
+    sh:maxCount 1 ;
+    sh:message "More than one dog with this microchip" ;
+  ] ;
+  .

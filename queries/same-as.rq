@@ -1,0 +1,9 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+# Each pair of different names for one thing, once.
+SELECT ?x ?y
+WHERE {
+  ?x owl:sameAs ?y .
+  FILTER (STR(?x) < STR(?y))
+}
+ORDER BY ?x ?y

@@ -1,0 +1,6 @@
+PREFIX ex: <http://example.org/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX reg: <http://example.org/registry/>
+
+# We have found out that the registry's dog-1 is our Malu.
+ex:malu owl:sameAs reg:dog-1 .

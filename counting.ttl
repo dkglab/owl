@@ -1,0 +1,36 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ex: <http://example.org/>
+
+# OWL III (24 Nov): counting. Not loaded by `make`; `make lagottos-counting`
+# adds it to ontology.ttl. Why can't we infer that Demetrio is a Lagotto
+# Romagnolo without these? And why does it take both of them?
+
+# Things with exactly two parents.
+ex:HasExactlyTwoParents a owl:Restriction ;
+  owl:onProperty ex:parent ;
+  owl:cardinality 2 ;
+  .
+
+# Dogs have exactly two parents.
+ex:Dog rdfs:subClassOf ex:HasExactlyTwoParents .
+
+# All the dogs mentioned are different individuals.
+ex:DistinctDogs a owl:AllDifferent ;
+  owl:distinctMembers (
+    ex:louie
+    ex:tito
+    ex:olly
+    ex:harley
+    ex:lisa
+    ex:puddles
+    ex:dalmazio
+    ex:gus
+    ex:demetrio
+    ex:rigo
+    ex:clotilde
+    ex:gualdarie
+    ex:malu
+    ex:elisa
+  ) ;
+  .

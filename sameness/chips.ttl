@@ -1,0 +1,5 @@
+PREFIX ex: <http://example.org/>
+
+# Our own records of two dogs' microchips (made up, like the registry's).
+ex:malu ex:microchip "208000000000001" .
+ex:gualdarie ex:microchip "380000000000002" .

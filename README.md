@@ -1,27 +1,63 @@
 # OWL
 
-[`dogs.ttl`](dogs.ttl) is our dogs dataset. Note that this data does not use
-OWL at all, and the meanings of the properties and classes used are
-left unspecified.
+Demos for OWL II and OWL III (INLS 620, 19 and 24 Nov). Open a codespace on
+this repository: the devcontainer has EYE, Jena and the rules, so there is
+nothing to install.
 
-[`ontology.ttl`](ontology.ttl) is an OWL ontology that specifies some meanings
-for the properties and classes used in the dogs dataset. It also
-defines some new classes that will allow us to infer which dogs are
-Danes and which dogs are Lagotto Romagnolos.
+[`dogs.ttl`](dogs.ttl) is our dogs dataset. It doesn't use OWL at all, and
+leaves the meanings of its properties and classes unspecified.
 
-The [`rules`](rules) directory contains logic rules used to implement
-OWL+RDFS reasoning. We're only using the specific rules needed to make
-the inferences we want to make.
+[`ontology.ttl`](ontology.ttl) is an OWL ontology that gives some of those
+properties and classes a meaning. It also defines new classes, so that we
+can infer which dogs are Danes and which are Lagotto Romagnolos.
 
-Run `make` to generate:
+[`rules/`](rules) holds the rules that do OWL and RDFS reasoning, written in
+N3 for the EYE reasoner. They are the same rules as the SHACL and OWL
+assignment's. A rule that ends in `=> false` finds a contradiction.
 
-* `inferred.ttl` which contains new triples inferred on the basis of
-  the dataset, the ontology, and the rules.
-* `all.ttl` which contains all the original triples in `dogs.ttl`
-  plus the new triples inferred.
+## Restrictions
 
-Run `make danes` to list instances of [`ex:Dane`](ontology.ttl#L47-L66).
+Run `make` to write:
 
-Run `make lagottos` to list instances of [`ex:LagottoRomagnolo`](ontology.ttl#L77-L101).
+* `inferred.ttl`, the new triples inferred from the dataset, the ontology
+  and the rules, and
+* `all.ttl`, all of those together.
 
+Then list the members of a class:
 
+| Command | Lists |
+|---|---|
+| `make birthplace-is-denmark` | `ex:BirthplaceIsDenmark`, an `owl:hasValue` restriction |
+| `make has-a-dane-ancestor` | `ex:HasADaneAncestor`, an `owl:someValuesFrom` restriction |
+| `make danes` | `ex:Dane` |
+| `make lagottos` | `ex:LagottoRomagnolo`, defined with `owl:hasValue` and `owl:allValuesFrom` |
+
+## Sameness
+
+[`sameness/registry.ttl`](sameness/registry.ttl) is a second source, an
+imaginary breed registry that describes two of our dogs with names of its
+own. Each target reasons over the dogs, the ontology and the registry, and
+one more file. Then it asks who Demetrio's mother is and what her microchip
+number is (the registry knows that), and which names name the same thing.
+
+| Command | Adds |
+|---|---|
+| `make same-as` | [`sameness/same-as.ttl`](sameness/same-as.ttl), an `owl:sameAs` we assert |
+| `make inverse-functional` | [`sameness/chips.ttl`](sameness/chips.ttl), our microchip records. `ex:microchip` is an `owl:InverseFunctionalProperty` |
+| `make sameness-shapes` | Nothing is inferred: [`sameness/shapes.ttl`](sameness/shapes.ttl) validates each source, then both |
+
+`ex:birthplace` is an `owl:FunctionalProperty`, so watch what happens to the
+countries as well as the dogs.
+
+If the rules conclude `false`, `reason.sh` prints the triples that can't all
+be true, and nothing else.
+
+## Counting
+
+[`counting.ttl`](counting.ttl) is for 24 Nov. `make lagottos-counting` adds it
+to the ontology and lists the Lagotto Romagnolos again.
+
+## Trying things
+
+Edit any `.ttl` file and run the target again. `git checkout <file>` puts a
+file back the way it was.
