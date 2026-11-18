@@ -1,13 +1,9 @@
 {
-    "name": "Customized Java",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
+    "name": "OWL",
+    "image": "ghcr.io/dkglab/shacl-and-owl-dev:latest",
     "customizations": {
         "vscode": {
             "extensions": [
-                "GitHub.copilot",
-                "GitHub.copilot-chat",
                 "rdfox.rdfox-rdf"
             ]
         }
