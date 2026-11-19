@@ -13,7 +13,7 @@ reg:dog-1 rdfs:label "Yduns Blue’s Malu" ;
   .
 
 reg:dog-2 rdfs:label "Dante delle Gualdarie" ;
-  ex:microchip "380000000000002" ;
+  ex:microchip "674000000000002" ;
   ex:birthplace reg:SM ;
   .
 
