@@ -27,9 +27,15 @@ ex:parent a owl:ObjectProperty ;
 ex:ancestor a owl:TransitiveProperty ;
   .
 
-# Things are born in countries.
+# Things are born in countries, and in only one: two birthplaces for one
+# dog are one country.
 ex:birthplace a owl:ObjectProperty , owl:FunctionalProperty ;
   rdfs:range ex:Country ;
+  .
+
+# A microchip identifies one dog: two dogs with the same microchip number
+# are the same dog. (dogs.ttl has no microchips; sameness/ does.)
+ex:microchip a owl:InverseFunctionalProperty ;
   .
 
 # Dogs have breeds.
@@ -65,15 +71,6 @@ ex:BirthplaceIsDenmark rdfs:subClassOf ex:Dane .
 # If something has an ancestor who is a Dane, then it is a Dane too.
 ex:HasADaneAncestor rdfs:subClassOf ex:Dane .
 
-# Things with exactly two parents.
-ex:HasExactlyTwoParents a owl:Restriction ;
-  owl:onProperty ex:parent ;
-  owl:cardinality 2 ;
-  .
-
-# Dogs have exactly two parents.
-ex:Dog rdfs:subClassOf ex:HasExactlyTwoParents .
-
 # Note that this is *not* the same thing as ex:lagotto.
 # ex:lagotto is an individual instance of the class ex:Breed.
 # ex:LagottoRomagnolo is a class, instances of which are individual dogs.
@@ -99,23 +96,3 @@ ex:AllParentsAreLagottos a owl:Restriction ;
 
 # If and only if all of something's parents are Lagotto Romagnolos, then it is a Lagotto Romagnolo too.
 ex:AllParentsAreLagottos owl:equivalentClass ex:LagottoRomagnolo .
-
-# All the dogs mentioned are different individuals.
-ex:DistinctDogs a owl:AllDifferent ;
-  owl:distinctMembers (
-    ex:louie
-    ex:tito
-    ex:olly
-    ex:harley
-    ex:lisa
-    ex:puddles
-    ex:dalmazio
-    ex:gus
-    ex:demetrio
-    ex:rigo
-    ex:clotilde
-    ex:gualdarie
-    ex:malu
-    ex:elisa
-  ) ;
-  .

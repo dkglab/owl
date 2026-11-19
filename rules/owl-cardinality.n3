@@ -1,0 +1,17 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# An exact cardinality is also a maximum, so the maxCardinality and
+# maxQualifiedCardinality rules apply to it. (It is also a minimum, but a
+# minimum only says that values exist, which adds no triples here.)
+{?C owl:cardinality ?N} => {?C owl:maxCardinality ?N}.
+{?C owl:qualifiedCardinality ?N} => {?C owl:maxQualifiedCardinality ?N}.
+
+# When a maximum has been reached by values known to be different, those are
+# all the values there are, so an allValuesFrom on the same property holds if
+# every one of them is in its class.
+{?C owl:maxCardinality 1. ?C owl:onProperty ?P. ?X a ?C. ?X ?P ?A. ?A a ?D. ?E owl:allValuesFrom ?D. ?E owl:onProperty ?P} => {?X a ?E}.
+{?C owl:maxCardinality 2. ?C owl:onProperty ?P. ?X a ?C. ?X ?P ?A. ?X ?P ?B. ?A owl:differentFrom ?B. ?A a ?D. ?B a ?D. ?E owl:allValuesFrom ?D. ?E owl:onProperty ?P} => {?X a ?E}.
+
+# More values known to be different than the maximum allows.
+{?C owl:maxCardinality 2. ?C owl:onProperty ?P. ?X a ?C. ?X ?P ?A. ?X ?P ?B. ?X ?P ?Z. ?A owl:differentFrom ?B. ?A owl:differentFrom ?Z. ?B owl:differentFrom ?Z} => false.

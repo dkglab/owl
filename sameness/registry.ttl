@@ -1,0 +1,21 @@
+PREFIX ex: <http://example.org/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX reg: <http://example.org/registry/>
+
+# A second source about some of the same dogs: an imaginary breed registry
+# that uses our properties but names dogs and countries its own way. The
+# registry and its microchip numbers are made up for the demo.
+
+reg:dog-1 rdfs:label "Yduns Blue’s Malu" ;
+  ex:microchip "208000000000001" ;
+  ex:birthplace reg:DK ;
+  .
+
+reg:dog-2 rdfs:label "Dante delle Gualdarie" ;
+  ex:microchip "674000000000002" ;
+  ex:birthplace reg:SM ;
+  .
+
+reg:DK rdfs:label "Danmark"@da .
+reg:SM rdfs:label "San Marino"@it .

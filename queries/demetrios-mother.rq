@@ -1,0 +1,9 @@
+PREFIX ex: <http://example.org/>
+
+# Our data says who Demetrio's mother is; the registry has microchips.
+SELECT ?mother ?chip
+WHERE {
+  ex:demetrio ex:mother ?mother .
+  OPTIONAL { ?mother ex:microchip ?chip }
+}
+ORDER BY ?mother
