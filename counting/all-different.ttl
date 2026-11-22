@@ -1,0 +1,12 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ex: <http://example.org/>
+
+# All fourteen dogs are different dogs: the same as writing out the 91
+# owl:differentFrom triples, one for each pair. `make all-different` adds
+# this file and two-parents.ttl to the ontology.
+[] a owl:AllDifferent ;
+  owl:distinctMembers (
+    ex:louie ex:tito ex:olly ex:harley ex:lisa ex:puddles ex:dalmazio
+    ex:gus ex:demetrio ex:rigo ex:clotilde ex:gualdarie ex:malu ex:elisa
+  ) ;
+  .

@@ -1,0 +1,24 @@
+PREFIX ex: <http://example.org/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+# The same expectations as two-parents.ttl and sexes.ttl, written as shapes:
+# here they report, not infer. `make counting-shapes` validates dogs.ttl.
+
+ex:TwoParentsShape a sh:NodeShape ;
+  sh:targetClass ex:Dog ;
+  sh:property [
+    sh:path [ sh:alternativePath ( ex:mother ex:father ) ] ;
+    sh:minCount 2 ;
+    sh:maxCount 2 ;
+    sh:message "Not exactly two parents" ;
+  ] ;
+  .
+
+ex:MotherShape a sh:NodeShape ;
+  sh:targetObjectsOf ex:mother ;
+  sh:not [
+    sh:path [ sh:inversePath ex:father ] ;
+    sh:minCount 1 ;
+  ] ;
+  sh:message "A mother who is also a father" ;
+  .

@@ -8,7 +8,8 @@ ARQ := arq --data
 
 .PHONY: all clean \
   birthplace-is-denmark has-a-dane-ancestor danes lagottos \
-  same-as inverse-functional sameness-shapes lagottos-counting
+  same-as inverse-functional sameness-shapes \
+  two-parents all-different sexes counting-shapes danish-lagottos
 
 all: all.ttl
 
@@ -73,7 +74,39 @@ sameness-shapes:
 	@shacl validate --shapes sameness/shapes.ttl --data build/both.nt --text
 
 # Counting (24 Nov) ----------------------------------------------------------
+#
+# Each target reasons over the dogs and the ontology plus the counting files
+# named, then lists the Lagotto Romagnolos again.
 
-lagottos-counting:
-	@if ./reason.sh build/counting.ttl ontology.ttl counting.ttl dogs.ttl; then \
-	  $(ARQ) build/counting.ttl --query queries/lagottos.rq; fi
+# Dogs have exactly two parents.
+two-parents:
+	@if ./reason.sh build/two-parents.ttl ontology.ttl dogs.ttl \
+	  counting/two-parents.ttl; then \
+	  $(ARQ) build/two-parents.ttl --query queries/lagottos.rq; fi
+
+# ... and the fourteen dogs are all different.
+all-different:
+	@if ./reason.sh build/all-different.ttl ontology.ttl dogs.ttl \
+	  counting/two-parents.ttl counting/all-different.ttl; then \
+	  $(ARQ) build/all-different.ttl --query queries/lagottos.rq; fi
+
+# ... or, instead, mothers are female, fathers are male, and nothing is both.
+sexes:
+	@if ./reason.sh build/sexes.ttl ontology.ttl dogs.ttl \
+	  counting/two-parents.ttl counting/sexes.ttl; then \
+	  $(ARQ) build/sexes.ttl --query queries/lagottos.rq; fi
+
+# The same expectations as shapes, with no inference.
+counting-shapes:
+	@shacl validate --shapes counting/shapes.ttl --data dogs.ttl --text
+
+# Lagotto Romagnolos who are Danes: an intersection, without counting and
+# then with it.
+danish-lagottos:
+	@echo "== without counting"
+	@if ./reason.sh build/sets.ttl ontology.ttl dogs.ttl counting/sets.ttl; then \
+	  $(ARQ) build/sets.ttl --query queries/danish-lagottos.rq; fi
+	@echo "== with two-parents.ttl and all-different.ttl"
+	@if ./reason.sh build/sets-counting.ttl ontology.ttl dogs.ttl counting/sets.ttl \
+	  counting/two-parents.ttl counting/all-different.ttl; then \
+	  $(ARQ) build/sets-counting.ttl --query queries/danish-lagottos.rq; fi

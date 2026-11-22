@@ -1,0 +1,8 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ex: <http://example.org/>
+
+# Classes made from other classes. `make danish-lagottos` adds this file to
+# the ontology, with and without the counting files.
+
+# Lagotto Romagnolos who are Danes.
+ex:DanishLagotto owl:intersectionOf ( ex:Dane ex:LagottoRomagnolo ) .

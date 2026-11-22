@@ -1,0 +1,12 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ex: <http://example.org/>
+
+# Mothers are female and fathers are male, and nothing is both. `make sexes`
+# adds this file and two-parents.ttl to the ontology, with no differentFrom
+# and no AllDifferent.
+
+ex:mother rdfs:range ex:Female .
+ex:father rdfs:range ex:Male .
+
+ex:Female owl:disjointWith ex:Male .
