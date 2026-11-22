@@ -1,0 +1,15 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ex: <http://example.org/>
+
+# OWL III (24 Nov): counting. `make two-parents` adds this file to the
+# ontology and lists the Lagotto Romagnolos again. Why still no Demetrio?
+
+# Things with exactly two parents.
+ex:HasExactlyTwoParents a owl:Restriction ;
+  owl:onProperty ex:parent ;
+  owl:cardinality 2 ;
+  .
+
+# Dogs have exactly two parents.
+ex:Dog rdfs:subClassOf ex:HasExactlyTwoParents .

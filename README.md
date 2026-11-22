@@ -52,10 +52,19 @@ countries as well as the dogs.
 If the rules conclude `false`, `reason.sh` prints the triples that can't all
 be true, and nothing else.
 
-## Counting
+## Counting (24 Nov)
 
-[`counting.ttl`](counting.ttl) is for 24 Nov. `make lagottos-counting` adds it
-to the ontology and lists the Lagotto Romagnolos again.
+Why isn't Demetrio a Lagotto Romagnolo? Each target reasons over the dogs
+and the ontology plus files from [`counting/`](counting), then lists the
+Lagotto Romagnolos again.
+
+| Command | Adds |
+|---|---|
+| `make two-parents` | [`counting/two-parents.ttl`](counting/two-parents.ttl): every dog has exactly two parents (`owl:cardinality 2`) |
+| `make all-different` | that, and [`counting/all-different.ttl`](counting/all-different.ttl): the fourteen dogs are all different (`owl:AllDifferent`) |
+| `make sexes` | `two-parents.ttl`, and [`counting/sexes.ttl`](counting/sexes.ttl) instead of `AllDifferent`: mothers are female, fathers are male, and nothing is both (`owl:disjointWith`) |
+| `make danish-lagottos` | [`counting/sets.ttl`](counting/sets.ttl), an `owl:intersectionOf`, without counting and then with it |
+| `make counting-shapes` | Nothing is inferred: [`counting/shapes.ttl`](counting/shapes.ttl) validates `dogs.ttl` against the same expectations |
 
 ## Trying things
 
